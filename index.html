@@ -12,8 +12,8 @@
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background: linear-gradient(145deg, #ffe6f0, #f3e6ff);
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;        /* вместо height: 100vh */
+      overflow-y: auto;        /* прокрутка всегда доступна */
       color: #4a2c3b;
       position: relative;
       animation: bgPulse 15s infinite alternate ease-in-out;
@@ -37,7 +37,7 @@
     /* ===== ЭКРАНЫ ===== */
     .screen {
       display: none;
-      height: 100vh;
+      min-height: 100vh;       /* вместо height: 100vh */
       width: 100vw;
       padding: 20px;
       text-align: center;
@@ -165,7 +165,7 @@
 
     #noBtn {
       background: #b38cff;
-      position: static;  /* по умолчанию стоит в потоке, потом moveNoBtn делает fixed */
+      position: static;  /* по умолчанию, moveNoBtn делает fixed */
       transition: none;
     }
 
@@ -287,19 +287,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ ===== */
-    @media (max-width: 768px) {
-      body {
-        overflow-y: auto;   /* включаем скролл */
-        height: auto;
-      }
-      .screen {
-        height: auto;
-        min-height: 100vh;
-      }
-      /* НЕ ПЕРЕОПРЕДЕЛЯЕМ #noBtn — пусть убегает и на телефонах */
-    }
-
+    /* ===== АДАПТАЦИЯ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ ===== */
     @media (max-width: 480px) {
       h1 { font-size: 28px; }
       p { font-size: 16px; max-width: 300px; }
@@ -638,7 +626,6 @@
     // ---------- ИНИЦИАЛИЗАЦИЯ ----------
     window.onload = function() {
       setGreeting();
-      // УБИРАЕМ ПРОВЕРКУ НА МОБИЛЬНОСТЬ — кнопка убегает на ВСЕХ устройствах
       if (noBtn) {
         noBtn.addEventListener('mouseenter', moveNoBtn);
         noBtn.addEventListener('touchstart', moveNoBtn, { passive: true });
