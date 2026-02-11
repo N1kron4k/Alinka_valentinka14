@@ -165,7 +165,7 @@
 
     #noBtn {
       background: #b38cff;
-      position: static;
+      position: static;  /* по умолчанию стоит в потоке, потом moveNoBtn делает fixed */
       transition: none;
     }
 
@@ -290,18 +290,14 @@
     /* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ ===== */
     @media (max-width: 768px) {
       body {
-        overflow-y: auto;
+        overflow-y: auto;   /* включаем скролл */
         height: auto;
       }
       .screen {
         height: auto;
         min-height: 100vh;
       }
-      #noBtn {
-        position: static !important;
-        left: auto !important;
-        top: auto !important;
-      }
+      /* НЕ ПЕРЕОПРЕДЕЛЯЕМ #noBtn — пусть убегает и на телефонах */
     }
 
     @media (max-width: 480px) {
@@ -642,8 +638,8 @@
     // ---------- ИНИЦИАЛИЗАЦИЯ ----------
     window.onload = function() {
       setGreeting();
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      if (!isMobile && noBtn) {
+      // УБИРАЕМ ПРОВЕРКУ НА МОБИЛЬНОСТЬ — кнопка убегает на ВСЕХ устройствах
+      if (noBtn) {
         noBtn.addEventListener('mouseenter', moveNoBtn);
         noBtn.addEventListener('touchstart', moveNoBtn, { passive: true });
       }
